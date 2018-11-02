@@ -25,6 +25,42 @@ class Solution
   public:
     int removeElement(vector<int> &nums, int val)
     {
+        int i = 0;
+        for (; i < nums.size(); ++i)
+        {
+            if (nums[i] != val)
+                continue;
+            int j = i + 1;
+            for (; j < nums.size(); ++j)
+            {
+                if (nums[j] != val)
+                {
+                    swap(nums[j], nums[i]);
+                    break;
+                }
+            }
+            if (j == nums.size())
+                break;
+        }
+        return i;
+    }
+
+    int solution2(vector<int> &nums, int val)
+    {
+        // 从第一个位置开始，遇见一个数不是val，就复制过去
+        // 因为这个题目说不用考虑后面的，因此覆盖是ok的
+        int i = 0;
+        int index = 0;
+        while (i < nums.size())
+        {
+            if (nums[i] != val)
+            {
+                nums[index] = nums[i];
+                index++;
+            }
+            i++;
+        }
+        return index;
     }
 };
 

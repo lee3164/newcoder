@@ -16,27 +16,20 @@ using namespace std;
 ]
 */
 
-class Solution
-{
-  public:
-    vector<vector<int>> threeSum(vector<int> &nums)
-    {
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int> &nums) {
         // 因为不能有重复的，所以需要跳过一样的元素，先进行排序，然后 头尾扫描
         vector<vector<int>> res;
         sort(nums.begin(), nums.end());
-        for (int i = 0; i < nums.size(); ++i)
-        {
-            if (nums[i] > 0)
-                break;
-            if (i > 0 && nums[i] == nums[i - 1])
-                continue;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] > 0) break;
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
             int s = i + 1, e = nums.size() - 1;
             int sum = 0 - nums[i];
-            while (s < e)
-            {
+            while (s < e) {
                 int sum2 = nums[s] + nums[e];
-                if (s > i + 1 && nums[s] == nums[s - 1])
-                {
+                if (s > i + 1 && nums[s] == nums[s - 1]) {
                     ++s;
                     continue;
                 }
@@ -53,8 +46,7 @@ class Solution
     }
 };
 
-int main()
-{
+int main() {
     auto vec = vector<int>({-1, 0, 1, 2, -1, -4});
     Solution().threeSum(vec);
     return 0;
