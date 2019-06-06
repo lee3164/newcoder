@@ -51,7 +51,7 @@ def merge_sort(nums):
             tmp.append(nums[i])
             i += 1
 
-        while j <= mid:
+        while j <= end:
             tmp.append(nums[j])
             j += 1
 
