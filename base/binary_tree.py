@@ -76,7 +76,7 @@ def post_order2(root):
     st = [root]
     while st:
         node = root[-1]
-        if ((node.left is None and node.right is None) or (pre != None and (node.left == pre or node.right == pre))):
+        if (node.left is None and node.right is None) or (pre is not None and (node.left == pre or node.right == pre)):
             r.append(node.val)
             st.pop()
             pre = node
