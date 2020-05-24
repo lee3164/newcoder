@@ -39,6 +39,9 @@
 链接：https://leetcode-cn.com/problems/sliding-window-maximum
 """
 
+from collections import deque
+
+
 class Solution(object):
     def maxSlidingWindow(self, nums, k):
         """
@@ -46,3 +49,20 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
+        r = []
+        d = deque()
+        for i, n in enumerate(nums):
+            while len(d) > 0 and d[-1] < n:
+                d.pop()
+            d.append(n)
+
+            if i >= k - 1:
+                r.append(d[0])
+                if d[0] == nums[i + 1 - k]:
+                    d.popleft()
+
+        return r
+
+
+if __name__ == '__main__':
+    print Solution().maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3)
