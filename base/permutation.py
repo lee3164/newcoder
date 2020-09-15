@@ -18,6 +18,7 @@ def next_permutation(nums):
     j在第二个2的位置，此时nums[i-1] == nums[j]，交换两个同样的数没啥意义，因为2在这个位置肯定
     已经被计算过了，此时应该跳过
     """
+
     i = len(nums) - 1
     while i > 0 and nums[i] <= nums[i - 1]:
         i -= 1

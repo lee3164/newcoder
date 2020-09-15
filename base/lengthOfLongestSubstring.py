@@ -6,6 +6,9 @@ from __future__ import absolute_import, unicode_literals
 
 
 def lengthOfLongestSubstring(s):
+    """
+    给定一个字符串，请你找出其中不含有重复字符的最长子串的长度。
+    """
     char_set = set()
     longest_len = 0
     i = j = 0
@@ -22,4 +25,4 @@ def lengthOfLongestSubstring(s):
 
 
 if __name__ == '__main__':
-    print lengthOfLongestSubstring("abba")
+    print lengthOfLongestSubstring("abbabaaadc")

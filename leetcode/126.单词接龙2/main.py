@@ -1,3 +1,4 @@
+# coding=utf-8
 from collections import defaultdict
 from copy import copy
 import string
@@ -39,6 +40,7 @@ class Solution(object):
 
     解释: endWord "cog" 不在字典中，所以不存在符合要求的转换序列。
     """
+
     def buildGraph1(self, wordList):
         m = defaultdict(set)
         i = 0
@@ -137,6 +139,124 @@ class Solution(object):
 
         return r
 
+    def findLadders2(self, beginWord, endWord, wordList):
+        if endWord not in wordList:
+            return []
+
+        m = defaultdict(set)
+        wordList = set(wordList)
+        wordList.add(beginWord)
+        for w1 in wordList:
+            for w2 in wordList:
+                if w1 == w2:
+                    continue
+                d = 0
+                for c1, c2 in zip(w1, w2):
+                    if c1 != c2:
+                        d += 1
+                    if d > 1:
+                        break
+                if d == 1:
+                    m[w1].add(w2)
+                    m[w2].add(w1)
+
+        r = []
+        q = [[beginWord]]
+        visited = set()
+        need_break = False
+        while q:
+            new_q = []
+            for wl in q:
+                w1 = wl[-1]
+
+                for w2 in m[w1]:
+                    if w2 in visited:
+                        continue
+
+                    t = copy(wl)
+                    t.append(w2)
+                    if w2 != endWord:
+                        new_q.append(t)
+                    else:
+                        r.append(t)
+                        need_break = True
+
+                visited.add(w1)
+
+            q = new_q
+            if need_break:
+                break
+
+        return r
+
+    def findLadders3(self, beginWord, endWord, wordList):
+        if endWord not in wordList:
+            return []
+
+        m = defaultdict(set)
+        wordList = set(wordList)
+        wordList.add(beginWord)
+        for w1 in wordList:
+            for w2 in wordList:
+                if w1 == w2:
+                    continue
+                d = 0
+                for c1, c2 in zip(w1, w2):
+                    if c1 != c2:
+                        d += 1
+                    if d > 1:
+                        break
+                if d == 1:
+                    m[w1].add(w2)
+                    m[w2].add(w1)
+
+        r = []
+        begin = {beginWord}
+        end = {endWord}
+
+        visited = set()
+        forward = True
+        paths = defaultdict(list)
+        paths[beginWord] = [[beginWord]]
+        paths[endWord] = [[endWord]]
+        need_break = False
+        while begin and end:
+            if len(begin) > len(end):
+                begin, end = end, begin
+                forward = not forward
+
+            tmp = set()
+            for w1 in begin:
+                for w2 in m[w1]:
+                    if w2 in visited:
+                        continue
+
+                    if w2 in paths:
+                        for p1 in paths[w1]:
+                            for p2 in paths[w2]:
+                                if forward:
+                                    r.append(p1 + p2)
+                                else:
+                                    r.append(p2 + p1)
+                        need_break = True
+                    else:
+                        for p in paths[w1]:
+                            t = copy(p)
+                            if forward:
+                                t.append(w2)
+                            else:
+                                t.insert(0, w2)
+                            paths[w2].append(t)
+
+                    tmp.add(w2)
+                visited.add(w1)
+
+            begin = tmp
+            if need_break:
+                break
+        return r
+
 
 if __name__ == '__main__':
-    pass
+    wordList = ["hot", "dot", "dog", "lot", "log", "cog"]
+    print Solution().findLadders3("hit", "cog", wordList)
